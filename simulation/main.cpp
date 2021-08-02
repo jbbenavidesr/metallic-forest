@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
     for (int k = 0; k < N; k++) // Run through every molecule
     {
         // Initial positions in a square lattice
-        x = dx + (k % Nx) * dx + x0;
-        y = dy + ((k / Nx) % Ny) * dy + y0;
+        x = 0;
+        y = 0;
         z = 0;
 
         // Initial langevin force
