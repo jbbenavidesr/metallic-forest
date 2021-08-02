@@ -2,7 +2,7 @@
  * Random number generator
  * Author : Jose Daniel Munoz et al.
  */
-#ifndef RANDON64_H
+#ifndef RANDOM64_H
 #define RANDOM64_H
 
 class CRandom

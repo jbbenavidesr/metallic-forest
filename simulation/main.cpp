@@ -13,44 +13,80 @@
 #include <sstream>
 #include <fstream>
 
+Vector3D getRandomForce2D(CRandom rand);
 std::string filename(int n);
 
 int main(int argc, char *argv[])
 {
     Body Molecule[N];
-    CRandom rand(42);
-    double mu = 0, sigma = 0.1;
-    double move_x, move_y;
-    Vector3D move;
-    double tdibujo = 0;
+    CRandom rand(seed);
 
-    double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly;
+    double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly, t;
+    Vector3D force(0, 0, 0);
 
     double dx = Lx / (Nx + 1);
     double dy = Ly / (Ny + 1);
 
+    // Open file to save info
+    std::ofstream file("../data/difusion.csv");
+
+    file << "t,x,y,z,v_x,v_y,v_z,u\n";
+
     // Initial configuration
     for (int k = 0; k < N; k++) // Run through every molecule
     {
-        // Initial positions in cubic lattice
+        // Initial positions in a square lattice
         x = dx + (k % Nx) * dx + x0;
         y = dy + ((k / Nx) % Ny) * dy + y0;
         z = 0;
 
-        // Initial null velocities
-        vx = 0;
-        vy = 0;
-        vz = 0;
+        // Initial langevin force
+        force = getRandomForce2D(rand);
+
+        // Initial velocities of half timestep before.
+        vx = -0.5 * dt * force.x() / m0;
+        vy = -0.5 * dt * force.y() / m0;
+        vz = -0.5 * dt * force.z() / m0;
 
         Molecule[k].init(x, y, z, vx, vy, vz, m0);
+
+        Molecule[k].addForce(force);
+
+        Molecule[k].printState(0, file);
     }
 
-    // Open file to save info
-    std::ofstream file("../data/difusion.csv");
+    for (int step = 1; step <= t_steps; step++)
+    {
+        t = step * dt;
+
+        for (int k = 0; k < N; k++)
+        {
+            // Calc velocity
+            Molecule[k].moveV(dt);
+            // Move particle
+            Molecule[k].moveR(dt);
+
+            // New force
+            force = -lambda * Molecule[k].getV() + getRandomForce2D(rand);
+            Molecule[k].resetForce();
+            Molecule[k].addForce(force);
+
+            Molecule[k].printState(t, file);
+        }
+    }
 
     // Make sure to close the file
     file.close();
     return 0;
+}
+
+Vector3D getRandomForce2D(CRandom rand)
+{
+    Vector3D result(
+        rand.gauss(mu, sigma),
+        rand.gauss(mu, sigma),
+        0);
+    return result;
 }
 
 std::string filename(int n)

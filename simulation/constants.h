@@ -14,11 +14,16 @@ const double coef1 = (1 - 2 * Lambda) / 2;
 const double coef2 = (1 - 2 * (Xi + Zi));
 
 // Implementation
-const int Nx = 100, Ny = 100;
+const int Nx = 10, Ny = 10;
 const int N = Nx * Ny;
 const double m0 = 1.0;
+const double lambda = 1.0;
+const double dt = 0.01;
+const int t_steps = 1000;
 
 // Random number generator
-const unsigned long long seed = 1;
+const unsigned long long seed = 42;
+const double mu = 0.0;
+const double sigma = 2.0;
 
 #endif

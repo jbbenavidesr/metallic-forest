@@ -11,17 +11,17 @@ Vector3D::Vector3D(double x0, double y0, double z0)
     v[2] = z0;
 }
 /* Load vector values */
-inline void Vector3D::load(double x0, double y0, double z0)
+void Vector3D::load(double x0, double y0, double z0)
 {
     v[0] = x0;
     v[1] = y0;
     v[2] = z0;
 }
-inline void Vector3D::show(void)
+void Vector3D::show(void)
 {
     std::cout << "(" << v[0] << "," << v[1] << "," << v[2] << ")" << std::endl;
 }
-inline Vector3D Vector3D::operator=(Vector3D v2)
+Vector3D Vector3D::operator=(Vector3D v2)
 {
     v[0] = v2.v[0];
     v[1] = v2.v[1];

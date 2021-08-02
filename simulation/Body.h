@@ -3,6 +3,9 @@
 
 #include "vector3D.h"
 
+#include <fstream>
+#include <iostream>
+
 // ----- Class Declarations -----
 class Body
 {
@@ -59,7 +62,5 @@ public:
 
     friend Vector3D rMin(Body b1, Body b2);
 };
-
-Vector3D rMin(Body b1, Body b2);
 
 #endif

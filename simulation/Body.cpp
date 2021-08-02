@@ -2,6 +2,7 @@
 #include "constants.h"
 
 #include <fstream>
+#include <cmath>
 
 /**
  * Initializes the molecule in a given initial position, with a given velocity and a given mass
