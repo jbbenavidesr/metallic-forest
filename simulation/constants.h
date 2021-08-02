@@ -1,6 +1,5 @@
-#include <iostream>
-#include <cmath>
-#include <fstream>
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 // Geometry constants
 const double Lx = 8, Ly = Lx;
@@ -21,3 +20,5 @@ const double m0 = 1.0;
 
 // Random number generator
 const unsigned long long seed = 1;
+
+#endif
