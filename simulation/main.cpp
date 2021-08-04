@@ -13,7 +13,7 @@
 #include <sstream>
 #include <fstream>
 
-Vector3D getRandomForce2D(CRandom rand);
+Vector3D getRandomForce2D(CRandom &rand);
 std::string filename(int n);
 
 int main(int argc, char *argv[])
@@ -21,11 +21,13 @@ int main(int argc, char *argv[])
     Body Molecule[N];
     CRandom rand(seed);
 
-    double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly, t;
+    double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly, t, t_dibujo = 0;
     Vector3D force(0, 0, 0);
 
     double dx = Lx / (Nx + 1);
     double dy = Ly / (Ny + 1);
+
+    start_animation(argc);
 
     // Open file to save info
     std::ofstream file("../data/difusion.csv");
@@ -36,8 +38,8 @@ int main(int argc, char *argv[])
     for (int k = 0; k < N; k++) // Run through every molecule
     {
         // Initial positions in a square lattice
-        x = 0;
-        y = 0;
+        x = 20;
+        y = 20;
         z = 0;
 
         // Initial langevin force
@@ -58,6 +60,7 @@ int main(int argc, char *argv[])
     for (int step = 1; step <= t_steps; step++)
     {
         t = step * dt;
+        t_dibujo++;
 
         for (int k = 0; k < N; k++)
         {
@@ -73,6 +76,19 @@ int main(int argc, char *argv[])
 
             Molecule[k].printState(t, file);
         }
+
+        // Animation part
+        if (argc > 1)
+        {
+            if (t_dibujo == 1000)
+            {
+                begin_frame(argc);
+                for (int k = 0; k < N; k++)
+                    Molecule[k].print();
+                end_frame(argc);
+                t_dibujo = 0;
+            }
+        }
     }
 
     // Make sure to close the file
@@ -80,7 +96,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-Vector3D getRandomForce2D(CRandom rand)
+Vector3D getRandomForce2D(CRandom &rand)
 {
     Vector3D result(
         rand.gauss(mu, sigma),

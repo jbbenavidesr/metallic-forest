@@ -19,11 +19,11 @@ const int N = Nx * Ny;
 const double m0 = 1.0;
 const double lambda = 1.0;
 const double dt = 0.01;
-const int t_steps = 10000;
+const int t_steps = 50000;
 
 // Random number generator
-const unsigned long long seed = 42;
+const unsigned long long seed = 31416;
 const double mu = 0.0;
-const double sigma = 0.1;
+const double sigma = 1.0;
 
 #endif

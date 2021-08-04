@@ -4,7 +4,7 @@ import pandas as pd
 
 data = pd.read_csv('../data/difusion.csv')
 
-info = data.groupby(['t']).aggregate(['mean', 'std'])
+info = data.groupby(['t']).aggregate(['std'])
 
 info.plot(y=['x', 'y'])
 
