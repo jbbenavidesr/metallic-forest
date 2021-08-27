@@ -7,6 +7,7 @@
 #include "animate.h"
 #include "random64.h"
 #include "constants.h"
+#include "molecular_dynamics2D.h"
 
 #include <iostream>
 #include <string>
@@ -19,7 +20,7 @@ std::string filename(int n);
 int main(int argc, char *argv[])
 {
     Body Molecule[N];
-    CRandom rand(seed);
+    MolecularDynamics2D world;
 
     double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly, t, t_dibujo = 0;
     Vector3D force(0, 0, 0);
@@ -27,72 +28,10 @@ int main(int argc, char *argv[])
     double dx = Lx / (Nx + 1);
     double dy = Ly / (Ny + 1);
 
-    start_animation(argc);
+    world.init(Molecule, seed);
 
-    // Open file to save info
-    std::ofstream file("../data/difusion.csv");
+    world.runSimulation(Molecule, t_steps);
 
-    file << "t,x,y,z,v_x,v_y,v_z,u\n";
-
-    // Initial configuration
-    for (int k = 0; k < N; k++) // Run through every molecule
-    {
-        // Initial positions in a square lattice
-        x = 20;
-        y = 20;
-        z = 0;
-
-        // Initial langevin force
-        force = getRandomForce2D(rand);
-
-        // Initial velocities of half timestep before.
-        vx = -0.5 * dt * force.x() / m0;
-        vy = -0.5 * dt * force.y() / m0;
-        vz = -0.5 * dt * force.z() / m0;
-
-        Molecule[k].init(x, y, z, vx, vy, vz, m0);
-
-        Molecule[k].addForce(force);
-
-        Molecule[k].printState(0, file);
-    }
-
-    for (int step = 1; step <= t_steps; step++)
-    {
-        t = step * dt;
-        t_dibujo++;
-
-        for (int k = 0; k < N; k++)
-        {
-            // Calc velocity
-            Molecule[k].moveV(dt);
-            // Move particle
-            Molecule[k].moveR(dt);
-
-            // New force
-            force = -lambda * Molecule[k].getV() + getRandomForce2D(rand);
-            Molecule[k].resetForce();
-            Molecule[k].addForce(force);
-
-            Molecule[k].printState(t, file);
-        }
-
-        // Animation part
-        if (argc > 1)
-        {
-            if (t_dibujo == 1000)
-            {
-                begin_frame(argc);
-                for (int k = 0; k < N; k++)
-                    Molecule[k].print();
-                end_frame(argc);
-                t_dibujo = 0;
-            }
-        }
-    }
-
-    // Make sure to close the file
-    file.close();
     return 0;
 }
 

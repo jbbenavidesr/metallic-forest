@@ -61,6 +61,7 @@ public:
     //-- Friends --
 
     friend Vector3D rMin(Body b1, Body b2);
+    friend class MolecularDynamics2D;
 };
 
 #endif

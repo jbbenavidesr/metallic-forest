@@ -10,7 +10,7 @@ class CRandom
     unsigned long long u, v, w;
 
 public:
-    CRandom(unsigned long long seed);
+    void init(unsigned long long seed);
     unsigned long long int64();
     double r() { return 5.42101086242752217E-20 * int64(); }
     unsigned int int32() { return (unsigned int)int64(); };

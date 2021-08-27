@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-CRandom::CRandom(unsigned long long seed)
+void CRandom::init(unsigned long long seed)
 {
     v = 4101842887655102017LL;
     w = 1;
