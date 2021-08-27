@@ -1,7 +1,12 @@
-data
+# Data related files
 *.txt
+*.csv
+*.dat
+
+# Compilation results
 *.o
 *.out
-.vscode
 
+# Files related to editor or operating system
+.vscode
 .DS_Store
