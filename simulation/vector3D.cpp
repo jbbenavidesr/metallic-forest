@@ -106,13 +106,16 @@ Vector3D operator*(double a, Vector3D v1)
     result = v1 * a;
     return result;
 }
-/* @return vector norm squared */
-double norm2(Vector3D v1)
+namespace vec3d
 {
-    return v1.v[0] * v1.v[0] + v1.v[1] * v1.v[1] + v1.v[2] * v1.v[2];
-}
-/* @return vector norm */
-double norm(Vector3D v1)
-{
-    return std::sqrt(v1.v[0] * v1.v[0] + v1.v[1] * v1.v[1] + v1.v[2] * v1.v[2]);
+    /* @return vector norm squared */
+    double norm2(Vector3D v1)
+    {
+        return v1.v[0] * v1.v[0] + v1.v[1] * v1.v[1] + v1.v[2] * v1.v[2];
+    }
+    /* @return vector norm */
+    double norm(Vector3D v1)
+    {
+        return std::sqrt(v1.v[0] * v1.v[0] + v1.v[1] * v1.v[1] + v1.v[2] * v1.v[2]);
+    }
 }

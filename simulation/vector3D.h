@@ -6,6 +6,16 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
+class Vector3D;
+
+namespace vec3d
+{
+    /* @return vector norm squared */
+    double norm2(Vector3D v1);
+    /* @return vector norm */
+    double norm(Vector3D v1);
+}
+
 class Vector3D
 {
     double v[3];
@@ -33,8 +43,8 @@ public:
     double operator*(Vector3D v2);
     Vector3D operator^(Vector3D v2);
     friend Vector3D operator*(double a, Vector3D v1);
-    friend double norm2(Vector3D v1);
-    friend double norm(Vector3D v1);
+    friend double vec3d::norm2(Vector3D v1);
+    friend double vec3d::norm(Vector3D v1);
 };
 
 #endif
