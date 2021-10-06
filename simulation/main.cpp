@@ -3,12 +3,12 @@
  * Main module. 
  * This program is for calculating and saving data. For animations please use animate.cpp
  */
-#include "Body.h"
-#include "animate.h"
-#include "random64.h"
-#include "constants.h"
-#include "molecular_dynamics2D.h"
-#include "vector3D.h"
+#include "deps/Body.h"
+#include "deps/animate.h"
+#include "deps/random64.h"
+#include "deps/constants.h"
+#include "deps/molecular_dynamics2D.h"
+#include "deps/vector3D.h"
 
 #include <iostream>
 #include <string>
