@@ -8,6 +8,7 @@
 #include "random64.h"
 #include "constants.h"
 #include "molecular_dynamics2D.h"
+#include "vector3D.h"
 
 #include <iostream>
 #include <string>
