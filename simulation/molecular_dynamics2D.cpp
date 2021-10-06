@@ -31,6 +31,8 @@ void MolecularDynamics2D::init(Body *Molecules, unsigned long long seed)
         Molecules[k].init(x, y, z, vx, vy, vz, m0);
     }
 
+    Molecules[0].is_aggregated = true; // randomly selected
+
     // Initial force
     calculateForces(Molecules);
 
@@ -50,10 +52,32 @@ void MolecularDynamics2D::calculateForces(Body *molecules)
         // Reset all forces
         molecules[k].resetForce();
 
+        if(molecules[k].is_aggregated) continue;
+
         // Add langevin force to each molecule
         molecules[k].addForce(
             langevinForce(rand, sigma, molecules[k].getV(), lambda));
     }
+}
+
+/** 
+ * Checks if two molecules are in contact, and if one of them is aggregated, the other one becomes 
+ *  aggregated as well
+ */
+void MolecularDynamics2D::checkAggregation(Body *molecules)
+{
+    double R2 = molecules[0].R*molecules[0].R;
+
+    for (int i=0; i<N; i++)
+        for (int j=i+1; j<N; j++)
+        {
+            double dr = vec3d::norm2(molecules[i].r - molecules[j].r);
+
+            if(dr <= R2 && molecules[i].is_aggregated+molecules[j].is_aggregated == 1){
+                molecules[i].is_aggregated = true;
+                molecules[j].is_aggregated = true;
+            }
+        }
 }
 
 void MolecularDynamics2D::runSimulation(Body *molecules, int t_steps)
@@ -77,6 +101,9 @@ void MolecularDynamics2D::runSimulation(Body *molecules, int t_steps)
 
             // New force
             molecules[k].resetForce();
+
+            if(molecules[k].is_aggregated) continue;
+
             molecules[k].addForce(langevinForce(rand, sigma, molecules[k].getV(), lambda));
         }
     }

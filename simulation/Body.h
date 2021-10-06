@@ -15,6 +15,9 @@ private:
     // It has a mass and a total potential energy U.
     double m, U;
     // For this first implementation I'll ignore the geometry and assume it as a point mass.
+    double R = 1.0;
+
+    bool is_aggregated = false;
 
 public:
     void init(double x, double y, double z, double vx, double vy, double vz, double mass = 1.0);
@@ -53,7 +56,7 @@ public:
     inline void setV(Vector3D newV) { v = newV; };
 
     //Get kinetic energy
-    inline double getK() { return 0.5 * m * norm2(v); };
+    inline double getK() { return 0.5 * m * vec3d::norm2(v); };
 
     // print gnuplot animation
     inline void print() { std::cout << "," << r.x() << "+0.2*cos(t)," << r.y() << "+0.2*sin(t)"; };

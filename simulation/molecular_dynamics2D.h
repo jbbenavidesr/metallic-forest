@@ -13,6 +13,7 @@ private:
 public:
     void init(Body *Molecules, unsigned long long seed);
     void calculateForces(Body *molecules);
+    void checkAggregation(Body *molecules);
     void runSimulation(Body *molecules, int t_steps);
 };
 
