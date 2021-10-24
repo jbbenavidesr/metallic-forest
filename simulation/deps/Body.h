@@ -22,7 +22,7 @@ private:
     bool is_aggregated = false;
 
 public:
-    void init(double x, double y, double z, double vx, double vy, double vz, double mass = 1.0, double q = 1.0);
+    void init(double x, double y, double z, double vx, double vy, double vz, double mass = 1.0, double q0 = 1.0);
     void printState(double t, std::ofstream &File);
 
     // --Inline Functions --

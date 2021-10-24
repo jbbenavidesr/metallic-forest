@@ -23,8 +23,8 @@ const int t_steps = 50000;
 const double D = 1.32; // Check units
 const double T = 300; // Check units
 const double kb = 0.826; // Check units
-const double gamma = kb*T/(m0*D); // Check units
-const double dtU2mGamma = dt/(2.0*m0*gamma); // Check units
+const double Gamma = kb*T/(m0*D); // Check units
+const double dtU2mGamma = dt/(2.0*m0*Gamma); // Check units
 
 // Random number generator
 const unsigned long long seed = 31416;

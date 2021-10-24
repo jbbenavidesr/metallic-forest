@@ -23,9 +23,10 @@ int main(int argc, char *argv[])
     Body Molecule[N];
     BrownianDynamics2D world;
 
-    world.init(Molecule, seed);
+    std::string filename = "brownian_dynamics.csv";
 
-    world.runSimulation(Molecule, t_steps);
+    world.init(Molecule, seed);
+    world.runSimulation(Molecule, t_steps, filename);
 
     return 0;
 }

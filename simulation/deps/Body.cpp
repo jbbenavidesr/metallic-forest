@@ -11,12 +11,14 @@
  * @param double x, y, z: Initial position of the body.
  * @param double vx, vy, vz: Initial velocity of the body.
  * @param double m: Mass of the body. Defaults to 1.
+ * @param double q0: Charge of the body. Defaults to 1
  */
-void Body::init(double x, double y, double z, double vx, double vy, double vz, double mass)
+void Body::init(double x, double y, double z, double vx, double vy, double vz, double mass, double q0)
 {
     r.load(x, y, z);
     v.load(vx, vy, vz);
     m = mass;
+    q = q0;
     resetForce();
     resetU();
 }
