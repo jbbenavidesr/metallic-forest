@@ -5,7 +5,7 @@ CACH = --tool=cachegrind
 C_STD = -std=c++11
 
 # Dependecies
-DEPS = deps/Body.cpp deps/molecular_dynamics2D.cpp deps/random64.cpp deps/vector3D.cpp
+DEPS = deps/Body.cpp deps/brownian_dynamics2D.cpp deps/random64.cpp deps/vector3D.cpp deps/forces.cpp
 
 all : main.o 
 
