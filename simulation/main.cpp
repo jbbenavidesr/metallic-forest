@@ -7,7 +7,7 @@
 #include "deps/animate.h"
 #include "deps/random64.h"
 #include "deps/constants.h"
-#include "deps/molecular_dynamics2D.h"
+#include "deps/brownian_dynamics2D.h"
 #include "deps/vector3D.h"
 
 #include <iostream>
@@ -21,28 +21,13 @@ std::string filename(int n);
 int main(int argc, char *argv[])
 {
     Body Molecule[N];
-    MolecularDynamics2D world;
-
-    double x, y, z, vx, vy, vz, x0 = 2 * Lx, y0 = 2 * Ly, t, t_dibujo = 0;
-    Vector3D force(0, 0, 0);
-
-    double dx = Lx / (Nx + 1);
-    double dy = Ly / (Ny + 1);
+    BrownianDynamics2D world;
 
     world.init(Molecule, seed);
 
     world.runSimulation(Molecule, t_steps);
 
     return 0;
-}
-
-Vector3D getRandomForce2D(CRandom &rand)
-{
-    Vector3D result(
-        rand.gauss(mu, sigma),
-        rand.gauss(mu, sigma),
-        0);
-    return result;
 }
 
 std::string filename(int n)
