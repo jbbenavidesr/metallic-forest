@@ -20,6 +20,11 @@ const double m0 = 1.0;
 const double lambda = 1.0;
 const double dt = 0.01;
 const int t_steps = 50000;
+const double D = 1.32; // Check units
+const double T = 300; // Check units
+const double kb = 0.826; // Check units
+const double gamma = kb*T/(m0*D); // Check units
+const double dtU2mGamma = dt/(2.0*m0*gamma); // Check units
 
 // Random number generator
 const unsigned long long seed = 31416;
