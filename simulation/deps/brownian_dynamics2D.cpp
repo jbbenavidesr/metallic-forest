@@ -46,38 +46,63 @@ void BrownianDynamics2D::runSimulation(Body *molecules, int t_steps, std::string
         {
             molecules[i].printState(t, file);
 
-            if(molecules[i].is_aggregated) continue;
+            if (molecules[i].is_aggregated)
+                continue;
 
             // Move particle
             Vector3D dr = calculateMotion(molecules[i]);
             molecules[i].moveR(dr);
         }
+
+        checkAggregation(molecules);
     }
     // Make sure to close the file
     file.close();
 }
 
-
 void BrownianDynamics2D::calculateForces(Body *molecules)
 {
-    for (int i=0; i<N; i++) molecules[i].resetForce();
+    for (int i = 0; i < N; i++)
+        molecules[i].resetForce();
 
-    for (int i=0; i<N; i++)
-        for (int j=i+1; j<N; j++)
+    for (int i = 0; i < N; i++)
+        for (int j = i + 1; j < N; j++)
         {
             Vector3D dF = coloumbForce(molecules[i], molecules[j]);
-            molecules[i].addForce(dF);
+            molecules[i].addForce(-1 * dF);
             molecules[j].addForce(dF);
         }
 
-    for (int i=0; i<N; i++) molecules[i].updateOldForce();
+    for (int i = 0; i < N; i++)
+        molecules[i].updateOldForce();
 }
 
 Vector3D BrownianDynamics2D::calculateMotion(Body molecule)
 {
-    double x = dtU2mGamma*(3*molecule.F[0]-molecule.F_old[0]) + rand.gauss(0,sigma);
-    double y = dtU2mGamma*(3*molecule.F[1]-molecule.F_old[1]) + rand.gauss(0,sigma);
+    double x = dtU2mGamma * (3 * molecule.F.x() - molecule.F_old.x()) + rand.gauss(0, sigma);
+    double y = dtU2mGamma * (3 * molecule.F.y() - molecule.F_old.y()) + rand.gauss(0, sigma);
 
     Vector3D dr(x, y);
     return dr;
+}
+
+/** 
+ * Checks if two molecules are in contact, and if one of them is aggregated, the other one becomes 
+ *  aggregated as well
+ */
+void BrownianDynamics2D::checkAggregation(Body *molecules)
+{
+    double R2 = molecules[0].R * molecules[0].R;
+
+    for (int i = 0; i < N; i++)
+        for (int j = i + 1; j < N; j++)
+        {
+            double dr = vec3d::norm2(molecules[i].r - molecules[j].r);
+
+            if (dr <= R2 && molecules[i].is_aggregated + molecules[j].is_aggregated == 1)
+            {
+                molecules[i].is_aggregated = true;
+                molecules[j].is_aggregated = true;
+            }
+        }
 }

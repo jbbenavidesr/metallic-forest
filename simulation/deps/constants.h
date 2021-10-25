@@ -14,17 +14,17 @@ const double coef1 = (1 - 2 * Lambda) / 2;
 const double coef2 = (1 - 2 * (Xi + Zi));
 
 // Implementation
-const int Nx = 20, Ny = 20;
+const int Nx = 2, Ny = 2;
 const int N = Nx * Ny;
 const double m0 = 1.0;
 const double lambda = 1.0;
 const double dt = 0.01;
 const int t_steps = 50000;
-const double D = 1.32; // Check units
-const double T = 300; // Check units
-const double kb = 0.826; // Check units
-const double Gamma = kb*T/(m0*D); // Check units
-const double dtU2mGamma = dt/(2.0*m0*Gamma); // Check units
+const double D = 1.32;                             // Check units
+const double T = 300;                              // Check units
+const double kb = 0.826;                           // Check units
+const double Gamma = kb * T / (m0 * D);            // Check units
+const double dtU2mGamma = dt / (2.0 * m0 * Gamma); // Check units
 
 // Random number generator
 const unsigned long long seed = 31416;
